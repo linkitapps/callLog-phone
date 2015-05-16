@@ -1,0 +1,30 @@
+<ion-view class="h6" title="Debug">
+  <ion-content class="has-header">
+    <div ng-repeat="call in data.callLog">
+      <div class="row">
+        <div class="col col-30 col-offset-10">Name</div>
+        <div class="col">{{call.cachedName}}</div>
+      </div>
+      <div class="row">
+        <div class="col col-30 col-offset-10">Number</div>
+        <div class="col">{{call.number}}</div>
+      </div>
+      <div class="row">
+        <div class="col col-30 col-offset-10">Type</div>
+        <div class="col">{{callTypeDisplay(call.type)}}</div>
+      </div>
+      <div class="row">
+        <div class="col col-30 col-offset-10">Date</div>
+        <div class="col">{{call.date | date}}</div>
+      </div>
+      <div class="row">
+        <div class="col col-30 col-offset-10">Duration</div>
+        <div class="col">{{call.duration}} seconds</div>
+      </div>
+      <div class="row">
+        <div class="col col-30 col-offset-10">Acknowledged</div>
+        <div class="col">{{(call.new == 1 ? 'yes' : 'no')}}</div>
+      </div>
+    </div>
+  </ion-content>
+</ion-view>
