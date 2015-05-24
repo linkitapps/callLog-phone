@@ -1,18 +1,18 @@
 angular.module('starter.controllers', [])
 
-.controller('DashCtrl', function($scope, $ionicPlatform, CallLogService) {
+.controller('DashCtrl', function($scope, $ionicPlatform, $cordovaGeolocation, CallLogService) {
   $ionicPlatform.ready(function() {
     $scope.data = {};
     $scope.callTypeDisplay = function(type) {
       switch(type) {
         case 1:
-          return 'Incoming';
+          return 'ìˆ˜ì‹ ';
         case 2:
-          return 'Outgoing';
+          return 'ë°œì‹ ';
         case 3:
-          return 'Missed';
+          return 'ë¶€ì¬ì¤‘';
         default:
-          return 'Unknown';
+          return 'ì•Œìˆ˜ì—†ìŒ';
       }
     };
 
@@ -26,11 +26,36 @@ angular.module('starter.controllers', [])
         console.error(error);
       });
 
+    var posOptions = {timeout: 10000, enableHighAccuracy: true};
+    $cordovaGeolocation
+      .getCurrentPosition(posOptions)
+      .then(function (position) {
+        var lat  = position.coords.latitude;
+        var long = position.coords.longitude;
+        var accuracy = position.coords.accuracy;
+        //alert(lat + ', ' + long + ', ' + accuracy);
+      }, function(err) {
+        switch(err.code) {
+          case err.PERMISSION_DENIED:
+            alert("User denied the request for Geolocation.");
+            break;
+          case err.POSITION_UNAVAILABLE:
+            alert("Location information is unavailable.");
+            break;
+          case err.TIMEOUT:
+            alert("The request to get user location timed out.");
+            break;
+          case err.UNKNOWN_ERROR:
+            alert("An unknown error occurred.");
+            break;
+        }
+      });
+
     // https://github.com/renanoliveira/cordova-phone-call-trap
     // http://blog.naver.com/jihwan0724/220352626225
-    // call state °¡ IDLE ÀÌ ¾Æ´Ñ °ÍÀÌ¾ú´Ù°¡ IDLE ·Î ¹Ù²ğ ¶§ callLog ÀúÀå
-    // ¿ø°İ ¾Û¿¡¼­´Â ÆùÀÇ callLog ¸¦ ¹Ù·Î ÀĞ´Â °ÍÀÌ ¾Æ´Ï¶ó ÆùÀÇ ¾Û¿¡ ÀúÀåµÈ callLog ¸¦ ÀĞÀ½
-    // Æù »ç¿ëÀÚ°¡ callLog ¸¦ »èÁ¦ÇØµµ ¿ø°İ ¾Û¿¡¼­´Â ¸ğµç callLog ¸¦ º¼ ¼ö ÀÖ°Ô ÇÏ±â À§ÇØ
+    // call state ê°€ IDLE ì´ ì•„ë‹Œ ê²ƒì´ì—ˆë‹¤ê°€ IDLE ë¡œ ë°”ë€” ë•Œ callLog ì €ì¥
+    // ì›ê²© ì•±ì—ì„œëŠ” í°ì˜ callLog ë¥¼ ë°”ë¡œ ì½ëŠ” ê²ƒì´ ì•„ë‹ˆë¼ í°ì˜ ì•±ì— ì €ì¥ëœ callLog ë¥¼ ì½ìŒ
+    // í° ì‚¬ìš©ìê°€ callLog ë¥¼ ì‚­ì œí•´ë„ ì›ê²© ì•±ì—ì„œëŠ” ëª¨ë“  callLog ë¥¼ ë³¼ ìˆ˜ ìˆê²Œ í•˜ê¸° ìœ„í•´
   });
 })
 
