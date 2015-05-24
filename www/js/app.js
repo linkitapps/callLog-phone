@@ -19,6 +19,14 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
       StatusBar.styleLightContent();
     }
 
+    var deviceInfo = {
+      platform: window.device.platform,
+      version: window.device.version,
+      uuid: window.device.uuid,
+      model: window.device.model,
+      manufacture: window.device.manufacture
+    };
+
     /*
     if (window.cordova && window.cordova.plugins && window.cordova.plugins.CallLog) {
       window.cordova.plugins.CallLog.list(1, function (response) {

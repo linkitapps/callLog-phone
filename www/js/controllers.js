@@ -26,6 +26,13 @@ angular.module('starter.controllers', [])
         console.error(error);
       });
 
+    if (!window.cordova.plugins.backgroundMode.isEnabled()) {
+      window.cordova.plugins.backgroundMode.configure({
+        silent: true
+      });
+      window.cordova.plugins.backgroundMode.enable();
+    }
+
     // https://github.com/renanoliveira/cordova-phone-call-trap
     // http://blog.naver.com/jihwan0724/220352626225
     // call state 가 IDLE 이 아닌 것이었다가 IDLE 로 바뀔 때 callLog 저장
