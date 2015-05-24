@@ -1,6 +1,6 @@
 angular.module('starter.controllers', [])
 
-.controller('DashCtrl', function($scope, $ionicPlatform, $cordovaGeolocation, CallLogService) {
+.controller('DashCtrl', function($scope, $ionicPlatform, CallLogService) {
   $ionicPlatform.ready(function() {
     $scope.data = {};
     $scope.callTypeDisplay = function(type) {
@@ -24,31 +24,6 @@ angular.module('starter.controllers', [])
       },
       function(error) {
         console.error(error);
-      });
-
-    var posOptions = {timeout: 10000, enableHighAccuracy: true};
-    $cordovaGeolocation
-      .getCurrentPosition(posOptions)
-      .then(function (position) {
-        var lat  = position.coords.latitude;
-        var long = position.coords.longitude;
-        var accuracy = position.coords.accuracy;
-        //alert(lat + ', ' + long + ', ' + accuracy);
-      }, function(err) {
-        switch(err.code) {
-          case err.PERMISSION_DENIED:
-            alert("User denied the request for Geolocation.");
-            break;
-          case err.POSITION_UNAVAILABLE:
-            alert("Location information is unavailable.");
-            break;
-          case err.TIMEOUT:
-            alert("The request to get user location timed out.");
-            break;
-          case err.UNKNOWN_ERROR:
-            alert("An unknown error occurred.");
-            break;
-        }
       });
 
     // https://github.com/renanoliveira/cordova-phone-call-trap
